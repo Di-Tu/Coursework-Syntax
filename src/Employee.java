@@ -54,7 +54,7 @@ public class Employee {
     }
 
     public void setSalary(double salary) {
-        if (salary <= 0) {
+        if (salary < 0) {
             throw new IllegalArgumentException("Ошибка ввода зарплаты");
         }
         this.salary = salary;

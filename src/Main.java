@@ -1,3 +1,4 @@
+
 public class Main {
     public static int counterId = 34000001;
 
@@ -38,6 +39,222 @@ public class Main {
         System.out.println("ФИО сотрудников");
         printNameEmployees(employee);
 
+//        Повышенная сложность
+//        Задача 1
+        System.out.println();
+        System.out.println("Индексация зарплаты");
+        double indexationPercentage = 8.3;
+        wageIndexation(employee, indexationPercentage);
+        printEmployees(employee);
+
+//        Задача 2.a
+        System.out.println();
+        int department = 2;
+        System.out.println("Найти сотрудника с мин.зарплатой в отделе " + department);
+        int sign = -1;
+        sign = minSalaryDepartment(employee, department);
+        System.out.println(employee[sign].toString());
+
+//        Задача 2.b
+        System.out.println();
+        department = 3;
+        System.out.println("Найти сотрудника с макс.зарплатой в отделе " + department);
+        sign = maxSalaryDepartment(employee, department);
+        System.out.println(employee[sign].toString());
+
+//        Задача 2.c
+        System.out.println();
+        department = 1;
+        System.out.println("Сумма затрат на з/п по отделу " + department);
+        System.out.println(totalExpensesPerDepartment(employee, department));
+
+//        Задача 2.d
+        System.out.println();
+        department = 1;
+        System.out.println("Средняя з/п по отделу " + department);
+        System.out.println(averageDepartmentSalary(employee, department));
+
+//        Задача 2.e
+        System.out.println();
+        department = 4;
+        double percent = 2.2;
+        System.out.println("Индексация з/п по отделу " + department + " на " + percent + "%");
+        wageIndexationDepartment(employee, department, percent);
+        printEmployeesDepartment(employee, department);
+
+//        Задача 2.f
+        System.out.println();
+        department = 1;
+        System.out.println("Сотрудники отдела " + department + " и их данные");
+        printEmployeesDepartment(employee, department);
+
+//        Задача 3.a
+        System.out.println();
+        double number = 99500;
+        System.out.println("Сотрудники имеющие зарплату менее: " + number);
+        employeesLess(employee, number);
+
+//        Задача 3.b
+        System.out.println();
+        number = 99500;
+        System.out.println("Сотрудники имеющие зарплату более: " + number);
+        employeesMore(employee, number);
+
+    }
+
+    //        Задача 3.b
+    public static void employeesMore(Employee[] employees, double number) {
+        if (number <= 0) {
+            throw new IllegalArgumentException("Введите положительное число");
+        }
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i].getSalary() > number && employees[i].getSalary() != 0) {
+                System.out.println("ID: " + employees[i].getId()
+                        + ", Сотрудник: " + employees[i].getName()
+                        + ", Зарплата " + employees[i].getSalary());
+            }
+        }
+    }
+
+    //        Задача 3.a
+    public static void employeesLess(Employee[] employees, double number) {
+        if (number <= 0) {
+            throw new IllegalArgumentException("Введите положительное число");
+        }
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i].getSalary() < number && employees[i].getSalary() != 0) {
+                System.out.println("ID: " + employees[i].getId()
+                        + ", Сотрудник: " + employees[i].getName()
+                        + ", Зарплата " + employees[i].getSalary());
+            }
+        }
+    }
+
+    //        Задача 2.f
+    public static void printEmployeesDepartment(Employee[] employees, int department) {
+        if (department <= 0 || department > 5) {
+            throw new IllegalArgumentException("Ошибка ввода номера отдела");
+        }
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i].getDepartment() == department) {
+                System.out.println("ID: " + employees[i].getId()
+                        + ", Сотрудник: " + employees[i].getName()
+                        + ", Зарплата " + employees[i].getSalary());
+            }
+        }
+    }
+
+    //        Задача 2.e
+    public static void wageIndexationDepartment(Employee[] employees, int department, double index) {
+        if (department <= 0 || department > 5) {
+            throw new IllegalArgumentException("Ошибка ввода номера отдела");
+        }
+        if (index <= 0) {
+            throw new IllegalArgumentException("Ошибка ввода процента индексации. Введите положительное число.");
+        }
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i].getName() == null || employees[i].getName().isEmpty()) {
+
+            } else if (employees[i].getDepartment() == department) {
+                employees[i].setSalary((double) ((int) ((employees[i].getSalary() * (1 + index / 100)) * 100)) / 100);
+            }
+        }
+    }
+
+    //        Задача 2.d
+    public static double averageDepartmentSalary(Employee[] employees, int department) {
+        if (department <= 0 || department > 5) {
+            throw new IllegalArgumentException("Ошибка ввода номера отдела");
+        }
+        int counter = 0;
+        double sum = 0;
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i].getDepartment() == department) {
+                sum = sum + employees[i].getSalary();
+                counter++;
+            }
+        }
+        return (double) ((int) (sum / counter * 100)) / 100;
+    }
+
+    //        Задача 2.c
+    public static double totalExpensesPerDepartment(Employee[] employees, int department) {
+        if (department <= 0 || department > 5) {
+            throw new IllegalArgumentException("Ошибка ввода номера отдела");
+        }
+        double sum = 0;
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i].getDepartment() == department) {
+                sum = sum + employees[i].getSalary();
+            }
+        }
+        return sum;
+    }
+
+    //        Задача 2.a
+    public static int minSalaryDepartment(Employee[] employees, int department) {
+        if (department <= 0 || department > 5) {
+            throw new IllegalArgumentException("Ошибка ввода номера отдела");
+        }
+        int label = 0;
+        int sign = -1;
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i].getDepartment() == department
+                    && label == 0
+                    && employees[i].getSalary() != 0) {
+                sign = i;
+                label = 1;
+            }
+            if (employees[i].getDepartment() == department
+                    && employees[i].getSalary() < employees[sign].getSalary()
+                    && employees[i].getSalary() != 0) {
+                sign = i;
+            }
+        }
+        if (sign == -1) {
+            throw new IllegalArgumentException("В отделе нет сотрудников");
+        } else return sign;
+    }
+
+    //        Задача 2.b
+    public static int maxSalaryDepartment(Employee[] employees, int department) {
+        if (department <= 0 || department > 5) {
+            throw new IllegalArgumentException("Ошибка ввода номера отдела");
+        }
+        int label = 0;
+        int sign = -1;
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i].getDepartment() == department
+                    && label == 0
+                    && employees[i].getSalary() != 0) {
+                sign = i;
+                label = 1;
+            }
+            if (employees[i].getDepartment() == department
+                    && employees[i].getSalary() > employees[sign].getSalary()
+                    && employees[i].getSalary() != 0) {
+                sign = i;
+            }
+        }
+        if (sign == -1) {
+            throw new IllegalArgumentException("В отделе нет сотрудников");
+        } else return sign;
+    }
+
+    //        Задача 1
+    public static void wageIndexation(Employee[] employees, double index) {
+        if (index <= 0) {
+            throw new IllegalArgumentException("Ошибка ввода процента индексации. Введите положительное число.");
+        }
+        int rounding;
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i].getName() == null || employees[i].getName().isEmpty()) {
+
+            } else {
+                rounding = (int) ((employees[i].getSalary() * (1 + index / 100)) * 100);
+                employees[i].setSalary((double) rounding / 100);
+            }
+        }
     }
 
     public static void printNameEmployees(Employee[] employees) {
@@ -59,7 +276,7 @@ public class Main {
     }
 
     public static int minSalary(Employee[] employees) {
-        double minSalary = employees[0].getSalary();
+        double minSalary = employees[maxSalary(employees)].getSalary();
         int sign = 0;
         for (int i = 0; i < employees.length; i++) {
             if (minSalary > employees[i].getSalary()) {

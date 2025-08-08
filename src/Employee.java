@@ -40,30 +40,18 @@ public class Employee {
     }
 
     public void setName(String name) {
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Ошибка ввода имени");
-        }
         this.name = name;
     }
 
     public void setDepartment(int department) {
-        if (department <= 0 || department > 5) {
-            throw new IllegalArgumentException("Ошибка ввода департамента");
-        }
         this.department = department;
     }
 
     public void setSalary(double salary) {
-        if (salary <= 0) {
-            throw new IllegalArgumentException("Ошибка ввода зарплаты");
-        }
         this.salary = salary;
     }
 
     public void setId(int id) {
-        if (id <= 0) {
-            throw new IllegalArgumentException("Ошибка ввода ID");
-        }
         this.id = id;
     }
 
@@ -88,3 +76,4 @@ public class Employee {
     }
 
 }
+
